@@ -28,10 +28,10 @@ public class Envio implements EmailIF, Observer {
 		this.destinatario = destinatario;
 		this.props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
+        	props.put("mail.smtp.socketFactory.port", "465");
+        	props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        	props.put("mail.smtp.auth", "true");
+        	props.put("mail.smtp.port", "465");
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class Envio implements EmailIF, Observer {
 			Address[] destinatarios = InternetAddress.parse(destinatario);
 			
 			this.message.setRecipients(Message.RecipientType.TO, destinatarios);
-			this.message.setSubject("Atualização do que foi digitado.");
+			this.message.setSubject("AtualizaÃ§Ã£o do que foi digitado.");
 			this.message.setText(mensagem);
 			Transport.send(this.message);
 			JOptionPane.showMessageDialog(null, "ENVIADO...");
