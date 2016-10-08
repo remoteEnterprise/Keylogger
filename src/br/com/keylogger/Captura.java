@@ -155,7 +155,7 @@ public class Captura implements NativeKeyListener, Subject {
 	}
 
 	@Override
-	public void addOberser(Observer o) {
+	public void addObserver(Observer o) {
 		this.observers.add(o);
 		
 	}
