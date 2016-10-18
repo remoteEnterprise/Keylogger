@@ -24,7 +24,7 @@ public class Captura implements NativeKeyListener, Subject {
 		switch(e.getKeyCode()) {
 		case(NativeKeyEvent.VC_A):
 			this.oQueFoiEscrito += "a";
-			this.letrasDigitadas++;	
+			this.letrasDigitadas++;
 		break;
 		case(NativeKeyEvent.VC_B):
 			this.oQueFoiEscrito += "b";
@@ -126,6 +126,66 @@ public class Captura implements NativeKeyListener, Subject {
 			this.oQueFoiEscrito += "z";
 			this.letrasDigitadas++;	
 		break;
+		case(NativeKeyEvent.VC_0):
+			this.oQueFoiEscrito += "0";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_1):
+			this.oQueFoiEscrito += "1";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_2):
+			this.oQueFoiEscrito += "2";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_3):
+			this.oQueFoiEscrito += "3";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_4):
+			this.oQueFoiEscrito += "4";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_5):
+			this.oQueFoiEscrito += "5";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_6):
+			this.oQueFoiEscrito += "6";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_7):
+			this.oQueFoiEscrito += "7";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_8):
+			this.oQueFoiEscrito += "8";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_9):
+			this.oQueFoiEscrito += "9";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_PERIOD):
+			this.oQueFoiEscrito += ".";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_COMMA):
+			this.oQueFoiEscrito += ",";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_SEMICOLON):
+			this.oQueFoiEscrito += ";";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_UNDERSCORE):
+			this.oQueFoiEscrito += "_";
+			this.letrasDigitadas++;	
+		break;
+		case(NativeKeyEvent.VC_MINUS):
+			this.oQueFoiEscrito += "-";
+			this.letrasDigitadas++;	
+		break;
 		case(NativeKeyEvent.VC_SPACE):
 			this.oQueFoiEscrito += "\n";
 		break;
@@ -155,7 +215,7 @@ public class Captura implements NativeKeyListener, Subject {
 	}
 
 	@Override
-	public void addOberser(Observer o) {
+	public void addObserver(Observer o) {
 		this.observers.add(o);
 		
 	}
