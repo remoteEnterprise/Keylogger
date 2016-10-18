@@ -30,9 +30,9 @@ public class Main {
 		 */
 		Subject captura = new Captura();
 		Observer envio = new Envio(captura, 
-				"FXFGAVAVDXAADTAFFAFGFDFAFGAAFXDDFADTXDATDXAADDDVXFAFFADX",
-				"AGAVAAAGDTFAFXAVGTXFGX",
-				"treemancorporation@gmail.com");
+				"FVAVFTXGAVDXAADDDVXGAAFFFTDD",	//EMIAL
+				"FVFTAAXGFVAVDTDAAAXGAAFFFTDD",	//SENHA
+				"destinatario@email.com");		//DESTINATARIO
 		captura.addObserver(envio);
 		//MenuGUI menu = new MenuGUI((Envio) envio, (Captura) captura);
 		/**
